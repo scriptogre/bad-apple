@@ -74,19 +74,17 @@ async def bad_apple_stream():
             progress = (i + 1) / total * 100
 
             yield sse(
-                f'<htmx target="#frames" swap="textContent">'
-                f'{frame}'
-                f'</htmx>',
+                f'<htmx target="#frames" swap="textContent">{frame}</htmx>',
             )
             yield sse(
                 f'<htmx target="#progress" swap="outerHTML">'
                 f'<div id="progress" style="--progress: {progress:.2f}%"></div>'
-                f'</htmx>',
+                f"</htmx>",
             )
             yield sse(
                 f'<htmx target="#progress-text" swap="textContent">'
-                f'{progress:.2f}% / 100%'
-                f'</htmx>',
+                f"{progress:.2f}% / 100%"
+                f"</htmx>",
             )
 
             await asyncio.sleep(frame_duration)
