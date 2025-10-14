@@ -4,19 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bad Apple | htmx + sse + server-commands</title>
+
+    <!-- tailwindcss (playCDN - no, I don't care about performance) -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- iconify icon -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@3.0.0/dist/iconify-icon.min.js"></script>
+
+    <!-- analytics -->
+    <script defer src="https://analytics.christiantanul.com/script.js" data-website-id="649933a2-83c5-42f1-94bb-e9e5fdad13b0"></script>
 
     <!-- favicon -->
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 
-    <!-- htmx (with PR https://github.com/bigskysoftware/htmx/pull/3425 merged) -->
+    <!-- htmx - modified, see https://github.com/bigskysoftware/htmx/pull/3425 -->
     <script defer src="https://raw.githack.com/scriptogre/htmx/feature/expose-history-functions/src/htmx.js"></script>
 
-    <!-- htmx extension - sse (server-sent events) -->
+    <!-- htmx extension - sse -->
     <script defer src="https://cdn.jsdelivr.net/npm/htmx-ext-sse@2.2.2"></script>
 
-    <!-- (new) htmx extension - server-commands -->
+    <!-- htmx extension - server-commands (new) -->
     <script defer src="https://raw.githack.com/scriptogre/htmx-extensions/feature/server-commands/src/server-commands/server-commands.js"></script>
 
     <style type="text/tailwindcss">
