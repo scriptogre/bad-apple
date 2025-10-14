@@ -1,7 +1,7 @@
 [project]
-name = "bad-apple-htmx-demo"
+name = "bad-apple"
 version = "0.1.0"
-description = "Bad Apple ASCII animation using htmx server-commands extension"
+description = "Bad Apple using htmx + sse ext. + server-commands ext."
 authors = [
     { name = "Christian Tanul", email = "contact@christiantanul.com" },
 ]
