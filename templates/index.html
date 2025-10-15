@@ -69,8 +69,8 @@
     <script defer src="https://raw.githack.com/scriptogre/htmx-extensions/feature/server-commands/src/server-commands/server-commands.js"></script>
 
     <style type="text/tailwindcss">
-        #progress {
-            @apply w-full origin-left scale-x-(--progress) h-px bg-white transition;
+        progress {
+            @apply h-3 w-full pointer-events-none appearance-none [&::-webkit-progress-bar]:bg-gray-800 [&::-webkit-progress-value]:bg-gray-500 [&::-moz-progress-bar]:bg-gray-500;
         }
     </style>
 </head>
@@ -114,7 +114,11 @@
 
 <div class="w-full relative">
     <div id="progress-text" class="absolute -top-6 left-0 text-xs sm:text-sm text-gray-400">0%</div>
-    <div id="progress" style="--progress: 0%"></div>
+    <div id="progress-container" class="cursor-pointer min-h-6"
+         hx-get="/seek"
+         hx-vals='js:{"start": (event.offsetX / event.target.offsetWidth) * 100}'>
+        <progress></progress>
+    </div>
 </div>
 
 </body>

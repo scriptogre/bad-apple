@@ -47,7 +47,7 @@ async def index(request: Request):
 
 
 @app.get("/stream")
-async def bad_apple_stream():
+async def bad_apple_stream(start: float = 0.0):
     """SSE endpoint for Bad Apple animation"""
 
     async def generate():
@@ -70,15 +70,20 @@ async def bad_apple_stream():
         frame_duration = 1.0 / 60.0  # 60 FPS
         total = len(frames_cache)
 
-        for i, frame in enumerate(frames_cache):
+        # Calculate starting frame based on percentage
+        start_frame = int((start / 100.0) * total)
+        start_frame = max(0, min(start_frame, total - 1))  # Clamp to valid range
+
+        for i in range(start_frame, total):
+            frame = frames_cache[i]
             progress = (i + 1) / total * 100
 
             yield sse(
                 f'<htmx target="#frames" swap="textContent">{frame}</htmx>',
             )
             yield sse(
-                f'<htmx target="#progress" swap="outerHTML">'
-                f'<div id="progress" style="--progress: {progress:.2f}%"></div>'
+                f'<htmx target="#progress-container" swap="innerHTML">'
+                f'<progress value="{i + 1}" max="{total}"></progress>'
                 f"</htmx>",
             )
             yield sse(
@@ -89,7 +94,15 @@ async def bad_apple_stream():
 
             await asyncio.sleep(frame_duration)
 
+        # Restart from beginning
+        yield sse(
+            '<htmx target="[sse-connect]" swap="outerHTML">'
+            '<div sse-connect="/stream?start=0" sse-swap="message"></div>'
+            '</htmx>'
+        )
+
         gzip_file.close()
+
 
     return StreamingResponse(
         generate(),
@@ -100,4 +113,17 @@ async def bad_apple_stream():
             "Connection": "keep-alive",
             "X-Accel-Buffering": "no",  # Disable nginx/proxy buffering
         },
+    )
+
+
+@app.get("/seek")
+def seek(start: float = 0.0):
+    """Seek to a specific frame percentage and return the HTML"""
+
+    return HTMLResponse(
+f"""
+<htmx target="[sse-connect]" swap="outerHTML">
+    <div sse-connect="/stream?start={start}" sse-swap="message"></div>
+</htmx>
+"""
     )
