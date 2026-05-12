@@ -98,11 +98,10 @@ async def bad_apple_stream(start: float = 0.0):
         yield sse(
             '<htmx target="[sse-connect]" swap="outerHTML">'
             '<div sse-connect="/stream?start=0" sse-swap="message"></div>'
-            '</htmx>'
+            "</htmx>"
         )
 
         gzip_file.close()
-
 
     return StreamingResponse(
         generate(),
@@ -121,7 +120,7 @@ def seek(start: float = 0.0):
     """Seek to a specific frame percentage and return the HTML"""
 
     return HTMLResponse(
-f"""
+        f"""
 <htmx target="[sse-connect]" swap="outerHTML">
     <div sse-connect="/stream?start={start}" sse-swap="message"></div>
 </htmx>

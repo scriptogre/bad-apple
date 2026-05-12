@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+@source '../../templates';
+
+@layer base {
+  progress {
+    @apply h-3 w-full pointer-events-none appearance-none [&::-webkit-progress-bar]:bg-gray-800 [&::-webkit-progress-value]:bg-gray-500 [&::-moz-progress-bar]:bg-gray-500;
+  }
+}
